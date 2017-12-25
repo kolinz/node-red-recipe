@@ -1,0 +1,202 @@
+[
+    {
+        "id": "ab884775.66e028",
+        "type": "tab",
+        "label": "speaking bot on your borwser",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7ad4a6cd.9931e8",
+        "type": "watson-speech-to-text",
+        "z": "ab884775.66e028",
+        "name": "",
+        "alternatives": 1,
+        "speakerlabels": true,
+        "smartformatting": false,
+        "lang": "ja-JP",
+        "langhidden": "ja-JP",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "band": "NarrowbandModel",
+        "bandhidden": "",
+        "password": "xxxxxxxx",
+        "payload-response": false,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/speech-to-text/api",
+        "x": 302,
+        "y": 44,
+        "wires": [
+            [
+                "826cd0fb.de10a",
+                "371a6e70.0c1c32"
+            ]
+        ]
+    },
+    {
+        "id": "826cd0fb.de10a",
+        "type": "debug",
+        "z": "ab884775.66e028",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "transcription",
+        "x": 554,
+        "y": 49,
+        "wires": []
+    },
+    {
+        "id": "3848aba4.293774",
+        "type": "watson-conversation-v1",
+        "z": "ab884775.66e028",
+        "name": "",
+        "workspaceid": "xxxxxxxxxx",
+        "multiuser": false,
+        "context": true,
+        "empty-payload": false,
+        "default-endpoint": true,
+        "service-endpoint": "https://gateway.watsonplatform.net/conversation/api",
+        "x": 621,
+        "y": 181,
+        "wires": [
+            [
+                "3516170a.abc1d8",
+                "7f04b1d2.d9bbc"
+            ]
+        ]
+    },
+    {
+        "id": "3516170a.abc1d8",
+        "type": "function",
+        "z": "ab884775.66e028",
+        "name": "output text",
+        "func": "msg.payload = msg.payload.output.text[1]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "d74dfe33.dccf7"
+            ]
+        ]
+    },
+    {
+        "id": "d74dfe33.dccf7",
+        "type": "watson-text-to-speech",
+        "z": "ab884775.66e028",
+        "name": "",
+        "lang": "ja-JP",
+        "langhidden": "ja-JP",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "ja-JP_EmiVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "xxxxxxxxx",
+        "payload-response": false,
+        "default-endpoint": true,
+        "service-endpoint": "https://stream.watsonplatform.net/text-to-speech/api",
+        "x": 600,
+        "y": 320,
+        "wires": [
+            [
+                "e2a13e46.09c09"
+            ]
+        ]
+    },
+    {
+        "id": "bb07182e.5792b8",
+        "type": "switch",
+        "z": "ab884775.66e028",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "音楽",
+                "vt": "str",
+                "case": true
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 444,
+        "y": 156,
+        "wires": [
+            [
+                "b7e3e630.f203d8"
+            ],
+            [
+                "3848aba4.293774"
+            ]
+        ]
+    },
+    {
+        "id": "b7e3e630.f203d8",
+        "type": "debug",
+        "z": "ab884775.66e028",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 616,
+        "y": 116,
+        "wires": []
+    },
+    {
+        "id": "371a6e70.0c1c32",
+        "type": "function",
+        "z": "ab884775.66e028",
+        "name": "Convert to text",
+        "func": "msg.payload = msg.transcription\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 266,
+        "y": 156,
+        "wires": [
+            [
+                "bb07182e.5792b8"
+            ]
+        ]
+    },
+    {
+        "id": "e2a13e46.09c09",
+        "type": "play audio",
+        "z": "ab884775.66e028",
+        "name": "",
+        "voice": "0",
+        "x": 770,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "7f04b1d2.d9bbc",
+        "type": "debug",
+        "z": "ab884775.66e028",
+        "name": "conversation output",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 833,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "45e9fab2.0b9b04",
+        "type": "microphone",
+        "z": "ab884775.66e028",
+        "name": "",
+        "x": 112,
+        "y": 43,
+        "wires": [
+            [
+                "7ad4a6cd.9931e8"
+            ]
+        ]
+    }
+]
