@@ -1,0 +1,242 @@
+[
+    {
+        "id": "559c0016.ff1d4",
+        "type": "tab",
+        "label": "inventry info sample app",
+        "disabled": false,
+        "info": "author:kolinz\nemail:knishikawa@kolinzlabs.com"
+    },
+    {
+        "id": "39b62753.23b008",
+        "type": "inject",
+        "z": "559c0016.ff1d4",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 40,
+        "wires": [
+            [
+                "fa07db6d.37d0d8",
+                "bfdd4b62.c34568"
+            ]
+        ]
+    },
+    {
+        "id": "fa07db6d.37d0d8",
+        "type": "function",
+        "z": "559c0016.ff1d4",
+        "name": "switch layer, move map and zoom",
+        "func": "msg.payload = { command:{layer:\"Esri Satellite\",lat:0,lon:0,zoom:3} };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 40,
+        "wires": [
+            [
+                "1f45ed2d.a21123"
+            ]
+        ]
+    },
+    {
+        "id": "bfdd4b62.c34568",
+        "type": "function",
+        "z": "559c0016.ff1d4",
+        "name": "sample-data",
+        "func": "msg.payload = 'created,updated,latitude,longitude,shop,Country,State,city,address line,phone,type,stokstatus\\n2020-04-07T00:13:33.870Z,2020-04-07T01:53:52.136Z,35.678815,139.787181,shop-A,JPN,Tokyo,chuo-ku,hakozaki,03-0000-0000,surgical-mask,yes\\n2020-04-06T23:45:01.895Z,2020-04-07T01:33:29.737Z,35.173063,136.882257,shop-B,JPN,Aichi,Nakamura-ku,naeki,052-000-0000,surgical-mask,yes\\n2020-04-06T23:17:23.170Z,2020-04-07T01:45:33.452Z,34.693539,135.495717,shop-C,JPN,Osaka,kita-ku,nakanoshima,06-0000-0000,surgical-mask,no';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "9c7dc9c9.e4fb58",
+                "229a06e0.9cfc3a"
+            ]
+        ]
+    },
+    {
+        "id": "9c7dc9c9.e4fb58",
+        "type": "csv",
+        "z": "559c0016.ff1d4",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "be39e881.5e3dd8"
+            ]
+        ]
+    },
+    {
+        "id": "bc4c33.ed3af3d",
+        "type": "function",
+        "z": "559c0016.ff1d4",
+        "name": "mapping",
+        "func": "msg.payload.lat = msg.payload.latitude;\nmsg.payload.lon = msg.payload.longitude;\n\nmsg.payload.name = msg.payload.shop;\nmsg.payload.icon = \"globe\";\nmsg.payload.iconColor = msg.payload.color;\n\n\t\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 920,
+        "y": 180,
+        "wires": [
+            [
+                "1f45ed2d.a21123",
+                "77cfcb87.8f7214"
+            ]
+        ]
+    },
+    {
+        "id": "1f45ed2d.a21123",
+        "type": "worldmap",
+        "z": "559c0016.ff1d4",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "path": "/worldmap",
+        "x": 1060,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "229a06e0.9cfc3a",
+        "type": "debug",
+        "z": "559c0016.ff1d4",
+        "name": "debug : sample-data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 580,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "77cfcb87.8f7214",
+        "type": "debug",
+        "z": "559c0016.ff1d4",
+        "name": "debug : mapping data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1100,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "be39e881.5e3dd8",
+        "type": "switch",
+        "z": "559c0016.ff1d4",
+        "name": "stock status",
+        "property": "payload.stokstatus",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "yes",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "no",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 510,
+        "y": 180,
+        "wires": [
+            [
+                "3a0e2631.d27c0a"
+            ],
+            [
+                "2977b749.7f6408"
+            ]
+        ]
+    },
+    {
+        "id": "3a0e2631.d27c0a",
+        "type": "change",
+        "z": "559c0016.ff1d4",
+        "name": "set color : green",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.color",
+                "pt": "msg",
+                "to": "green",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 160,
+        "wires": [
+            [
+                "bc4c33.ed3af3d"
+            ]
+        ]
+    },
+    {
+        "id": "2977b749.7f6408",
+        "type": "change",
+        "z": "559c0016.ff1d4",
+        "name": "set color : red",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.color",
+                "pt": "msg",
+                "to": "red",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 220,
+        "wires": [
+            [
+                "bc4c33.ed3af3d"
+            ]
+        ]
+    }
+]
