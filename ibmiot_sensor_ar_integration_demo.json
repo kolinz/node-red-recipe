@@ -1,0 +1,248 @@
+[
+    {
+        "id": "ad1edd4d.f8676",
+        "type": "tab",
+        "label": "AR x Sensor demo",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1ce3085e.838b88",
+        "type": "http response",
+        "z": "ad1edd4d.f8676",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 930,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "30a7ca7.9437f36",
+        "type": "template",
+        "z": "ad1edd4d.f8676",
+        "name": "A-Frame",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n  <head>\n    <script src=\"https://aframe.io/releases/1.0.4/aframe.min.js\"></script>\n    <script src=\"https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js\"></script>\n    <script>\n        const timer = 60000    // reload interval time: millisecond(ms) , 1minuts = 60000ms\n        window.addEventListener('load',function(){\n        setInterval('location.reload()',timer);\n        });\n    </script>\n  </head>\n  <body>\n    <a-scene embedded arjs>\n    <a-marker preset=\"hiro\">\n      <a-text value=\"Hello World!\" position=\"0 4.4 0\"></a-text>\n      <a-box position=\"0 0.5 0\" color=\"{{payload.level1}}\"></a-box>\n      <a-box position=\"0 1.6 0\" color=\"{{payload.level2}}\"></a-box>\n      <a-box position=\"0 2.7 0\" color=\"{{payload.level3}}\"></a-box>\n    </a-marker>\n    <a-entity camera></a-entity>\n    </a-scene>\n  </body>\n</html>",
+        "output": "str",
+        "x": 740,
+        "y": 320,
+        "wires": [
+            [
+                "1ce3085e.838b88"
+            ]
+        ]
+    },
+    {
+        "id": "1db96d66.6f8983",
+        "type": "ibmiot in",
+        "z": "ad1edd4d.f8676",
+        "authentication": "quickstart",
+        "apiKey": "",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "33a2c1a13d27",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "quickstart",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "941e5e37.33c23"
+            ]
+        ]
+    },
+    {
+        "id": "46248474.7ff8cc",
+        "type": "switch",
+        "z": "ad1edd4d.f8676",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "num"
+            },
+            {
+                "t": "lte",
+                "v": "29",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "5d996f18.38dd2"
+            ],
+            [
+                "2daa13ff.bf819c"
+            ]
+        ]
+    },
+    {
+        "id": "10a30e7c.ffb252",
+        "type": "function",
+        "z": "ad1edd4d.f8676",
+        "name": "Get Flow variable",
+        "func": "var temp = flow.get(\"temp\");\nmsg.payload = temp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "46248474.7ff8cc"
+            ]
+        ]
+    },
+    {
+        "id": "b5a40ba3.48d1a8",
+        "type": "http in",
+        "z": "ad1edd4d.f8676",
+        "name": "",
+        "url": "/aframe",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "10a30e7c.ffb252"
+            ]
+        ]
+    },
+    {
+        "id": "941e5e37.33c23",
+        "type": "change",
+        "z": "ad1edd4d.f8676",
+        "name": "Insert Sensor data to Flow  variable",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temp",
+                "pt": "flow",
+                "to": "payload.d.temp",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 80,
+        "wires": [
+            [
+                "156af4b6.5f9bfb"
+            ]
+        ]
+    },
+    {
+        "id": "7d881c11.031824",
+        "type": "debug",
+        "z": "ad1edd4d.f8676",
+        "name": "Debug: Flow Variable",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "156af4b6.5f9bfb",
+        "type": "function",
+        "z": "ad1edd4d.f8676",
+        "name": "Flow variable",
+        "func": "var temp = flow.get(\"temp\");\nmsg.payload = temp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "7d881c11.031824"
+            ]
+        ]
+    },
+    {
+        "id": "64a4e7ca.18f368",
+        "type": "comment",
+        "z": "ad1edd4d.f8676",
+        "name": "Get Sensor data",
+        "info": "",
+        "x": 160,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "62ead0fd.e447",
+        "type": "comment",
+        "z": "ad1edd4d.f8676",
+        "name": "Generate AR",
+        "info": "",
+        "x": 150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2daa13ff.bf819c",
+        "type": "function",
+        "z": "ad1edd4d.f8676",
+        "name": "Set Collor : under 29 degrees Celsius",
+        "func": "var color1 = \"#d9d44c\";\nvar color2 = \"#d99c4c\";\nvar color3 = \"#E6E6E6\";\nmsg.payload = {\n    level1: color1,\n    level2: color2,\n    level3: color3\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 380,
+        "wires": [
+            [
+                "30a7ca7.9437f36"
+            ]
+        ]
+    },
+    {
+        "id": "5d996f18.38dd2",
+        "type": "function",
+        "z": "ad1edd4d.f8676",
+        "name": "Set Collor : over 30 degrees Celsius",
+        "func": "var color1 = \"#d9d44c\";\nvar color2 = \"#d99c4c\";\nvar color3 = \"#d9614c\";\nmsg.payload = {\n    level1: color1,\n    level2: color2,\n    level3: color3\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "30a7ca7.9437f36"
+            ]
+        ]
+    }
+]
