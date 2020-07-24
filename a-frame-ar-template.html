@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <!-- 文字コードを指定 -->
+    <meta charset="utf-8">
+    <!-- A-Frame ライブラリの読み込み -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <!-- AR.js ライブラリの読み込み -->
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+    <!-- ar-click-events ライブラリの読み込み -->
+    <script src="https://raw.githubusercontent.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-click-events/events.js"></script>
+  </head>
+  <body>
+    <!-- デバッグUIを無効化 -->
+    <a-scene embedded arjs="debugUIEnabled: false;" renderer="gammaOutput: true;" vr-mode-ui="enabled:false" >
+      
+      <a-assets>
+        <!-- 独自作成の3Dモデルデータの読み込み -->
+        <a-asset-item id="Model" src="https://raw.githubusercontent.com/kolinz/node-red-recipe/master/3dmodel/house.gltf">
+        </a-asset-item>
+      </a-assets>
+      
+      <!-- 照明設定 -->
+      <a-light type="directional" color="#FFF" intensity="0.5" position="-1 1 2"></a-light>
+      <a-light type="ambient" color="#FFF"></a-light>
+      
+      <!-- デフォルトARマーカー -->
+      <!-- <a-marker preset="hiro"> -->
+      <!-- カスタムARマーカーの読み込み。AR.js Marker Trainingでマーカーを作成 -->
+      <a-marker type="pattern" url="https://raw.githubusercontent.com/kolinz/node-red-recipe/master/3dmodel/pattern-custom-ar-marker.patt">
+        
+        <!-- 文章の表示。フォントを追加すれば日本語表示も可 -->
+        <a-text value="Hello World!" position="0 3.5 0"></a-text>
+        
+        <!-- 3Dモデルの呼び出しとリンク先の指定 -->
+        <a-entity gltf-model="#Model" position="0 0 0" scale="0.5 0.5 0.5" rotation="0 0 0"  link="href: https://kaishi-pu.ac.jp/department/ict/;">
+        </a-entity>
+      
+      </a-marker>
+      
+      <!-- カメラコンポーネントの呼び出し -->
+      <a-entity camera>
+        
+        <!-- 5000ミリ秒=5秒経つと3Dモデルにセットしたリンク先に遷移 -->
+        <a-entity cursor="fuse: true; fuseTimeout: 5000">
+        </a-entity>
+        
+      </a-entity>
+      
+    </a-scene>
+  </body>
+</html>
