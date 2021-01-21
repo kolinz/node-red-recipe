@@ -1,0 +1,255 @@
+[
+    {
+        "id": "dfa2037f.3531e",
+        "type": "tab",
+        "label": "Teachable Machine 画像認識",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "10b1d12d.50285f",
+        "type": "teachable machine",
+        "z": "dfa2037f.3531e",
+        "name": "",
+        "mode": "online",
+        "modelUrl": "https://teachablemachine.withgoogle.com/models/xxxxxxxxx/",
+        "localModel": "teachable_model",
+        "output": "best",
+        "activeThreshold": false,
+        "threshold": 80,
+        "activeMaxResults": false,
+        "maxResults": 3,
+        "passThrough": true,
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "544f370b.75a078"
+            ]
+        ]
+    },
+    {
+        "id": "9443fcb7.0c4ed",
+        "type": "function",
+        "z": "dfa2037f.3531e",
+        "name": "DB保管データの生成",
+        "func": "var classname = msg.class;\nvar score = msg.score;\nvar image = msg.image;\nvar mimetype = msg.req.files[0].mimetype;\nmsg.payload = {\n        \"class\": classname,\n        \"score\": score,\n        \"_attachments\": {　\n            \"file\": {\n                \"content_type\": mimetype,\n                \"data\":  image\n            }\n        }\n    };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 960,
+        "y": 240,
+        "wires": [
+            [
+                "4b4445a0.21106c",
+                "8dfdb974.6e3498"
+            ]
+        ]
+    },
+    {
+        "id": "4b4445a0.21106c",
+        "type": "debug",
+        "z": "dfa2037f.3531e",
+        "name": "DBへの格納データ",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1190,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5c8f9307.b3fbdc",
+        "type": "http in",
+        "z": "dfa2037f.3531e",
+        "name": "/form",
+        "url": "/form",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "35aaad1.5d51a52"
+            ]
+        ]
+    },
+    {
+        "id": "37e55a41.2528f6",
+        "type": "http response",
+        "z": "dfa2037f.3531e",
+        "name": "",
+        "x": 970,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "35aaad1.5d51a52",
+        "type": "template",
+        "z": "dfa2037f.3531e",
+        "name": "画像アップロードフォーム",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html lang=\"ja\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n\t<title>file upload</title>\n<head>\n<meta charset=\"utf-8\">\n<title>アップロード</title>\n</head>\n<body>\n<form action=\"/upload\" method=\"post\" enctype=\"multipart/form-data\">\n<input name=\"file\" type=\"file\" id=\"file\"><br>\n<input type=\"submit\" value=\"アップロード\">\n</form>\n</body>\n</html>",
+        "x": 380,
+        "y": 80,
+        "wires": [
+            [
+                "37e55a41.2528f6"
+            ]
+        ]
+    },
+    {
+        "id": "9f585d58.3016d",
+        "type": "http in",
+        "z": "dfa2037f.3531e",
+        "name": "/upload",
+        "url": "/upload",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "4c01b353.ae21dc"
+            ]
+        ]
+    },
+    {
+        "id": "66f1fbf6.7f92a4",
+        "type": "comment",
+        "z": "dfa2037f.3531e",
+        "name": "入力フォーム",
+        "info": "",
+        "x": 130,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "7856cb04.85cc04",
+        "type": "comment",
+        "z": "dfa2037f.3531e",
+        "name": "アップロードファイルを取得",
+        "info": "",
+        "x": 180,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9d2a1b07.7d1f58",
+        "type": "comment",
+        "z": "dfa2037f.3531e",
+        "name": "結果の表示",
+        "info": "",
+        "x": 800,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4c01b353.ae21dc",
+        "type": "function",
+        "z": "dfa2037f.3531e",
+        "name": "画像をpayloadへ",
+        "func": "msg.payload = msg.req.files[0].buffer;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 180,
+        "wires": [
+            [
+                "10b1d12d.50285f"
+            ]
+        ]
+    },
+    {
+        "id": "544f370b.75a078",
+        "type": "base64",
+        "z": "dfa2037f.3531e",
+        "name": "",
+        "action": "",
+        "property": "image",
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "4138701f.4eabe"
+            ]
+        ]
+    },
+    {
+        "id": "1a309205.e2043e",
+        "type": "template",
+        "z": "dfa2037f.3531e",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\">\n<title>Result</title>\n<style type=\"text/css\">\ntable{\n  width: 100%;\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntable th,table td{\n  padding: 10px 0;\n  text-align: center;\n}\n\ntable tr:nth-child(odd){\n  background-color: #eee\n}\n</style>\n</head>\n<body>\n<center>\n<h4>Recognition result</h4>\n<table>\n    <tr>\n        <th>class</th>\n        <th>score</th>\n        <tr>\n        <td>{{class}}</td>\n        <td>{{score}}</td>\n        </tr>\n    </tr>\n</table>\n<hr />\n<p><button type=\"button\" onclick=\"history.back()\">Back</button></p>\n</center>\n</body>\n</html>",
+        "output": "str",
+        "x": 800,
+        "y": 180,
+        "wires": [
+            [
+                "37e55a41.2528f6"
+            ]
+        ]
+    },
+    {
+        "id": "4138701f.4eabe",
+        "type": "function",
+        "z": "dfa2037f.3531e",
+        "name": "クラス名とスコアの抽出",
+        "func": "msg.class = msg.payload[0].class;\nmsg.score = msg.payload[0].score;\nmsg.image = msg.image;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690,
+        "y": 240,
+        "wires": [
+            [
+                "1a309205.e2043e",
+                "9443fcb7.0c4ed"
+            ]
+        ]
+    },
+    {
+        "id": "8dfdb974.6e3498",
+        "type": "cloudant out",
+        "z": "dfa2037f.3531e",
+        "name": "save db",
+        "cloudant": "",
+        "database": "teachable-machine-recognition",
+        "service": "node-red-hshgr-cloudant-1591774136879-71743",
+        "payonly": true,
+        "operation": "insert",
+        "x": 1160,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5b8f3f47.36d11",
+        "type": "comment",
+        "z": "dfa2037f.3531e",
+        "name": "JPEG画像のみ画像認識",
+        "info": "",
+        "x": 420,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7279a548.a416fc",
+        "type": "comment",
+        "z": "dfa2037f.3531e",
+        "name": "認識結果と画像データをDBに保存",
+        "info": "",
+        "x": 1040,
+        "y": 200,
+        "wires": []
+    }
+]
