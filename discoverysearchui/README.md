@@ -1,6 +1,6 @@
-# Watson Disovery AI検索
+# Watson Disovery AI検索 UI
 ## 概要
-IBM Watson Discoveryを使うことで、アップロードした文書やWebクロールによるAI検索が実施できるため、Node-REDを使ってUIを作成する。
+IBM Watson Discoveryを使うことで、アップロードした文書やWebクロールによるAI検索が実施できるため、Node-REDを使ってUIを作成。
 
 ## 動作確認方法
 - json形式のフローファイルを、Node-REDに「読み込む」ことで、Node-RED上で動かすことができる。
@@ -11,6 +11,8 @@ IBM Watson Discoveryを使うことで、アップロードした文書やWebク
   1. 「読み込み先」に「新規タブ」を選択。
   1. 「読み込み」をクリック。
   1. 「Watson Discovery AI検索」タブが表示される。
+  1. 読み込み後のNode-RED上のフロー
+  ![読み込みフローイメージ](https://github.com/kolinz/node-red-recipe/blob/master/discoverysearchui/images/flowimage.png)
   
 
 # 参考資料
