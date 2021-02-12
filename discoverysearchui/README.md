@@ -1,4 +1,4 @@
-# Watson Disovery AI検索 UI
+# Watson Discovery AI検索 UI
 ## 概要
 IBM Watson Discoveryを使うことで、アップロードした文書やWebクロールによるAI検索が実施できるため、Node-REDを使ってUIを作成。
 
