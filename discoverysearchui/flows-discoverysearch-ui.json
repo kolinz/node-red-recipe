@@ -1,0 +1,483 @@
+[
+    {
+        "id": "576efd61.86f304",
+        "type": "tab",
+        "label": "Watson Discovery AI 検索",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "319a2da9.e7a8d2",
+        "type": "watson-discovery-v1",
+        "z": "576efd61.86f304",
+        "name": "最大5件出力",
+        "environmentname": "",
+        "environmentId": "1f1e05a3-4ee6-4987-87fe-4a472b5f31b5",
+        "collectionId": "4d4e9a2a-4a14-4fca-9873-4d288ee0451c",
+        "configurationname": "",
+        "configurationId": "",
+        "collection_name": "",
+        "count": "5",
+        "passages": true,
+        "nlp_query": true,
+        "query": "",
+        "filter": "",
+        "aggregation": "",
+        "return": "",
+        "description": "",
+        "size": 0,
+        "discovery-method": "query",
+        "service-endpoint": "https://api.us-south.discovery.watson.cloud.ibm.com/instances/34487021-3e0f-4f02-bbdd-45a3c80024bc",
+        "x": 130,
+        "y": 400,
+        "wires": [
+            [
+                "fd7f1b5b.f95138",
+                "aecb19d4.7ff478"
+            ]
+        ]
+    },
+    {
+        "id": "84aaa0ad.52b8d",
+        "type": "watson-discovery-v1-query-builder",
+        "z": "576efd61.86f304",
+        "name": "",
+        "password": "",
+        "apikey": "Lfapp9LjQdHBKcGDG2vP6Y0ZFy1p83ArAG22zJwJED69",
+        "environment": "1f1e05a3-4ee6-4987-87fe-4a472b5f31b5",
+        "environmenthidden": "1f1e05a3-4ee6-4987-87fe-4a472b5f31b5",
+        "collection": "4d4e9a2a-4a14-4fca-9873-4d288ee0451c",
+        "collectionhidden": "4d4e9a2a-4a14-4fca-9873-4d288ee0451c",
+        "nlp_query": true,
+        "nlp_queryhidden": "true",
+        "querynlp": "",
+        "querynlphidden": "",
+        "query1": "text",
+        "query1hidden": "",
+        "queryvalue1": "",
+        "queryvalue1hidden": "",
+        "query2": "text",
+        "query2hidden": "",
+        "queryvalue2": "",
+        "queryvalue2hidden": "",
+        "query3": "text",
+        "query3hidden": "",
+        "queryvalue3": "",
+        "queryvalue3hidden": "",
+        "passages": false,
+        "passageshidden": "false",
+        "service-endpoint": "https://api.us-south.discovery.watson.cloud.ibm.com/instances/34487021-3e0f-4f02-bbdd-45a3c80024bc",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "3482f0a3.c03f9"
+            ]
+        ]
+    },
+    {
+        "id": "3482f0a3.c03f9",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "function:query",
+        "func": "msg.discoveryparams = {};\nmsg.discoveryparams.environment_id = '1f1e05a3-4ee6-4987-87fe-4a472b5f31b5';\nmsg.discoveryparams.collection_id = '4d4e9a2a-4a14-4fca-9873-4d288ee0451c';\nmsg.discoveryparams.nlp_query = true;\nmsg.discoveryparams.query = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "319a2da9.e7a8d2"
+            ]
+        ]
+    },
+    {
+        "id": "c253cd73.85db",
+        "type": "http in",
+        "z": "576efd61.86f304",
+        "name": "",
+        "url": "/search",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "3b3370e9.30e65"
+            ]
+        ]
+    },
+    {
+        "id": "b82d780a.d09918",
+        "type": "http response",
+        "z": "576efd61.86f304",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 890,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3b3370e9.30e65",
+        "type": "template",
+        "z": "576efd61.86f304",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html lang=\"ja\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n\t\n\t<title>AI検索</title>\n    <style type=\"text/css\">\n    @import url(https://fonts.googleapis.com/css?family=Open+Sans);\n\n    body{\n      background: #f2f2f2;\n      font-family: 'Open Sans', sans-serif;\n    }\n    \n    dl.search{\n    position:relative;\n    }\n    \n    dl.search dt{\n    \tmargin-right:105px;\n    \tpadding:8px;\n    \tbackground-color:#fff;\n    \tborder:1px solid #aaa;\n    }\n    dl.search dt input{\n    \twidth:100%;\n    \theight:24px;\n    \tline-height:24px;\n    \tbackground:none;\n    \tborder:none;\n    }\n    dl.search dd{\n    \tposition:absolute;\n    \ttop:0;\n    \tright:0;\n    }\n    dl.search dd button{\n    \tdisplay:block;\n    \twidth:100px;\n    \theight:42px;\n    \tcolor:#fff;\n    \tline-height:40px;\n    \ttext-align:center;\n    \tbackground-color:#66b3ff;\n    \tborder:1px solid #6699cc;\n    }\n    \n    table{\n      width: 100%;\n      border-collapse: collapse;\n      border-spacing: 0;\n    }\n    \n    table th,table td{\n      padding: 10px 0;\n      text-align: center;\n    }\n    \n    table tr:nth-child(odd){\n      background-color: #eee\n    }\n    </style>\n</head>\n<body>\n<form id=\"search\" method=\"POST\" action=\"search\">\n<dl class=\"search\">\n\t<dt><input type=\"text\" name=\"keyword\" class=\"searchTerm\" placeholder=\"キーワードを入れてください。\"/></dt>\n    <dd><button type=\"submit\" class=\"searchButton\">検索</button></dd>\n</dl>\n</form>\n<p>該当件数:{{payload.amount}} / キーワード:{{payload.keyword}}</p>\n<table>\n    <tr>\n        <th>Title</th>\n        <th>Summary</th>\n        <tr>\n            <td><a href=\"{{payload.result_0_url}}\" target=_blank>{{payload.result_0_title}}</a></td>\n            <td>{{payload.result_0_text}}</td>\n        </tr>\n        <tr>\n            <td><a href=\"{{payload.result_1_url}}\" target=_blank>{{payload.result_1_title}}</a></td>\n            <td>{{payload.result_1_text}}</td>\n        </tr>\n    </tr>\n</table>\n</body>\n</html>\n",
+        "output": "str",
+        "x": 740,
+        "y": 80,
+        "wires": [
+            [
+                "b82d780a.d09918"
+            ]
+        ]
+    },
+    {
+        "id": "42b79c70.3b1a64",
+        "type": "http in",
+        "z": "576efd61.86f304",
+        "name": "",
+        "url": "/search",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "c68f0ee2.4f042"
+            ]
+        ]
+    },
+    {
+        "id": "c68f0ee2.4f042",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "",
+        "func": "msg.payload = msg.payload.keyword;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 220,
+        "wires": [
+            [
+                "84aaa0ad.52b8d",
+                "6ba9a981.3df9b8"
+            ]
+        ]
+    },
+    {
+        "id": "139b2834.2b1c48",
+        "type": "link out",
+        "z": "576efd61.86f304",
+        "name": "",
+        "links": [
+            "e2f810b.d13d6f"
+        ],
+        "x": 695,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e2f810b.d13d6f",
+        "type": "link in",
+        "z": "576efd61.86f304",
+        "name": "",
+        "links": [
+            "139b2834.2b1c48",
+            "5f2748f6.136248",
+            "c2a89508.5a5c88",
+            "c343b511.a17268",
+            "338cfc37.26e7d4"
+        ],
+        "x": 795,
+        "y": 300,
+        "wires": [
+            [
+                "3b3370e9.30e65"
+            ]
+        ]
+    },
+    {
+        "id": "d814a2ed.42196",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "2件該当の場合",
+        "func": "var keyword = msg.payload;\nvar amount = msg.search_results.matching_results;\nvar result_0_title = msg.search_results.results[0].title;\nvar result_0_url = msg.search_results.results[0].url;\nvar result_0_text = msg.search_results.results[0].text;\nvar result_1_title = msg.search_results.results[1].title;\nvar result_1_url = msg.search_results.results[1].url;\nvar result_1_text = msg.search_results.results[1].text;\nmsg.payload = {\n            \"result_0_title\": result_0_title,\n            \"result_0_url\": result_0_url,\n            \"result_0_text\": result_0_text,\n            \"result_1_title\": result_1_title,\n            \"result_1_url\": result_1_url,\n            \"result_1_text\": result_1_text,\n            \"keyword\": keyword,\n            \"amount\": amount\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 340,
+        "wires": [
+            [
+                "5f2748f6.136248"
+            ]
+        ]
+    },
+    {
+        "id": "1af418d8.0a8e07",
+        "type": "comment",
+        "z": "576efd61.86f304",
+        "name": "検索と検索結果表示フォーム",
+        "info": "",
+        "x": 180,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e5d20564.da81a8",
+        "type": "comment",
+        "z": "576efd61.86f304",
+        "name": "1つのキーワードを、Watson DiscoveryでAI検索",
+        "info": "",
+        "x": 240,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "fd7f1b5b.f95138",
+        "type": "switch",
+        "z": "576efd61.86f304",
+        "name": "",
+        "property": "search_results.matching_results",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "5",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 352,
+        "y": 400,
+        "wires": [
+            [
+                "9bf448ba.335b28"
+            ],
+            [
+                "d814a2ed.42196"
+            ],
+            [
+                "c2ca1405.29f738"
+            ],
+            [
+                "4966c218.930c3c"
+            ],
+            [
+                "7cfa155f.7e436c"
+            ],
+            [
+                "c61afc90.7da49"
+            ]
+        ]
+    },
+    {
+        "id": "9bf448ba.335b28",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "1件該当の場合",
+        "func": "var keyword = msg.payload;\nvar amount = msg.search_results.matching_results;\nvar result_0_title = msg.search_results.results[0].title;\nvar result_0_url = msg.search_results.results[0].url;\nvar result_0_text = msg.search_results.results[0].text;\nmsg.payload = {\n            \"result_0_title\": result_0_title,\n            \"result_0_url\": result_0_url,\n            \"result_0_text\": result_0_text,\n            \"keyword\": keyword,\n            \"amount\": amount\n            \n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 300,
+        "wires": [
+            [
+                "139b2834.2b1c48"
+            ]
+        ]
+    },
+    {
+        "id": "5f2748f6.136248",
+        "type": "link out",
+        "z": "576efd61.86f304",
+        "name": "",
+        "links": [
+            "e2f810b.d13d6f"
+        ],
+        "x": 695,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6ba9a981.3df9b8",
+        "type": "debug",
+        "z": "576efd61.86f304",
+        "name": "debug: キーワード取得",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "aecb19d4.7ff478",
+        "type": "debug",
+        "z": "576efd61.86f304",
+        "name": "debug: discovery出力",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 160,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c61afc90.7da49",
+        "type": "debug",
+        "z": "576efd61.86f304",
+        "name": "debug: discovery出力 (その他)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c2ca1405.29f738",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "3件該当の場合",
+        "func": "var keyword = msg.payload;\nvar amount = msg.search_results.matching_results;\nvar result_0_title = msg.search_results.results[0].title;\nvar result_0_url = msg.search_results.results[0].url;\nvar result_0_text = msg.search_results.results[0].text;\nvar result_1_title = msg.search_results.results[1].title;\nvar result_1_url = msg.search_results.results[1].url;\nvar result_1_text = msg.search_results.results[1].text;\nvar result_2_title = msg.search_results.results[2].title;\nvar result_2_url = msg.search_results.results[2].url;\nvar result_2_text = msg.search_results.results[2].text;\nmsg.payload = {\n            \"result_0_title\": result_0_title,\n            \"result_0_url\": result_0_url,\n            \"result_0_text\": result_0_text,\n            \"result_1_title\": result_1_title,\n            \"result_1_url\": result_1_url,\n            \"result_1_text\": result_1_text,\n            \"result_2_title\": result_2_title,\n            \"result_2_url\": result_2_url,\n            \"result_2_text\": result_2_text,\n            \"keyword\": keyword,\n            \"amount\": amount\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "c2a89508.5a5c88"
+            ]
+        ]
+    },
+    {
+        "id": "c2a89508.5a5c88",
+        "type": "link out",
+        "z": "576efd61.86f304",
+        "name": "",
+        "links": [
+            "e2f810b.d13d6f"
+        ],
+        "x": 695,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "4966c218.930c3c",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "4件該当の場合",
+        "func": "var keyword = msg.payload;\nvar amount = msg.search_results.matching_results;\nvar result_0_title = msg.search_results.results[0].title;\nvar result_0_url = msg.search_results.results[0].url;\nvar result_0_text = msg.search_results.results[0].text;\nvar result_1_title = msg.search_results.results[1].title;\nvar result_1_url = msg.search_results.results[1].url;\nvar result_1_text = msg.search_results.results[1].text;\nvar result_2_title = msg.search_results.results[2].title;\nvar result_2_url = msg.search_results.results[2].url;\nvar result_2_text = msg.search_results.results[2].text;\nvar result_3_title = msg.search_results.results[3].title;\nvar result_3_url = msg.search_results.results[3].url;\nvar result_3_text = msg.search_results.results[3].text;\nmsg.payload = {\n            \"result_0_title\": result_0_title,\n            \"result_0_url\": result_0_url,\n            \"result_0_text\": result_0_text,\n            \"result_1_title\": result_1_title,\n            \"result_1_url\": result_1_url,\n            \"result_1_text\": result_1_text,\n            \"result_2_title\": result_2_title,\n            \"result_2_url\": result_2_url,\n            \"result_2_text\": result_2_text,\n            \"result_3_title\": result_3_title,\n            \"result_3_url\": result_3_url,\n            \"result_3_text\": result_3_text,\n            \"keyword\": keyword,\n            \"amount\": amount\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 420,
+        "wires": [
+            [
+                "c343b511.a17268"
+            ]
+        ]
+    },
+    {
+        "id": "c343b511.a17268",
+        "type": "link out",
+        "z": "576efd61.86f304",
+        "name": "",
+        "links": [
+            "e2f810b.d13d6f"
+        ],
+        "x": 695,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "7cfa155f.7e436c",
+        "type": "function",
+        "z": "576efd61.86f304",
+        "name": "5件該当の場合",
+        "func": "var keyword = msg.payload;\nvar amount = msg.search_results.matching_results;\nvar result_0_title = msg.search_results.results[0].title;\nvar result_0_url = msg.search_results.results[0].url;\nvar result_0_text = msg.search_results.results[0].text;\nvar result_1_title = msg.search_results.results[1].title;\nvar result_1_url = msg.search_results.results[1].url;\nvar result_1_text = msg.search_results.results[1].text;\nvar result_2_title = msg.search_results.results[2].title;\nvar result_2_url = msg.search_results.results[2].url;\nvar result_2_text = msg.search_results.results[2].text;\nvar result_3_title = msg.search_results.results[3].title;\nvar result_3_url = msg.search_results.results[3].url;\nvar result_3_text = msg.search_results.results[3].text;\nvar result_4_title = msg.search_results.results[4].title;\nvar result_4_url = msg.search_results.results[4].url;\nvar result_4_text = msg.search_results.results[4].text;\nmsg.payload = {\n            \"result_0_title\": result_0_title,\n            \"result_0_url\": result_0_url,\n            \"result_0_text\": result_0_text,\n            \"result_1_title\": result_1_title,\n            \"result_1_url\": result_1_url,\n            \"result_1_text\": result_1_text,\n            \"result_2_title\": result_2_title,\n            \"result_2_url\": result_2_url,\n            \"result_2_text\": result_2_text,\n            \"result_3_title\": result_3_title,\n            \"result_3_url\": result_3_url,\n            \"result_3_text\": result_3_text,\n            \"result_4_title\": result_4_title,\n            \"result_4_url\": result_4_url,\n            \"result_4_text\": result_4_text,\n            \"keyword\": keyword,\n            \"amount\": amount\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 460,
+        "wires": [
+            [
+                "338cfc37.26e7d4"
+            ]
+        ]
+    },
+    {
+        "id": "338cfc37.26e7d4",
+        "type": "link out",
+        "z": "576efd61.86f304",
+        "name": "",
+        "links": [
+            "e2f810b.d13d6f"
+        ],
+        "x": 695,
+        "y": 460,
+        "wires": []
+    }
+]
