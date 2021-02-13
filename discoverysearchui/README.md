@@ -6,6 +6,7 @@ IBM Watson Discoveryを使うことで、アップロードした文書やWebク
 - json形式のフローファイルを、Node-REDに「読み込む」ことで、Node-RED上で動かすことができる。
 - Node-RED環境を用意。無料で使いたい場合は、IBM Cloud ライト・アカウントが最も楽。Node-RED自体は、オープンソースソフトウェア。
   - Node-RED 導入手順書 [Getting Started:Node-RED日本ユーザー会](https://nodered.jp/docs/getting-started/)
+  - IBM Cloud以外でNode-REDを導入した場合は、Node-REDの画面右上の「三」→「パレットの管理」→「ノードを追加」の順にクリックし、「node-red-node-watson」ノードを追加しておくこと。
 - 読み込み方法
   1. [flows-discoverysearch-ui.json](https://github.com/kolinz/node-red-recipe/blob/master/discoverysearchui/flows-discoverysearch-ui.json)に新規タブでアクセスし、「Raw」ボタンをクリック。
   1. 全選択(Windowsを利用の場合は、Ctrl+Aキー)を行い、その後コピーを実行。
