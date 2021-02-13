@@ -7,7 +7,10 @@ IBM Watson Discoveryを使うことで、アップロードした文書やWebク
 - Node-RED環境を用意。無料で使いたい場合は、IBM Cloud ライト・アカウントが最も楽。Node-RED自体は、オープンソースソフトウェア。
   - Node-RED 導入手順書 [Getting Started:Node-RED日本ユーザー会](https://nodered.jp/docs/getting-started/)
 - 読み込み方法
-  1. Node-REDを起動し、画面右上の「三」→「読み込む」→「読み込むファイルを選択」をクリック。
+  1. [flows-discoverysearch-ui.json](https://github.com/kolinz/node-red-recipe/blob/master/discoverysearchui/flows-discoverysearch-ui.json)に新規タブでアクセスし、「Raw」ボタンをクリック。
+  1. 全選択(Windowsを利用の場合は、Ctrl+Aキー)を行い、その後コピーを実行。
+  1. Node-REDを起動し、画面右上の「三」→「読み込む」をクリック。
+  1. 「フローをクリップボードから読み込み」に、コピーしておいた、「flows-discoverysearch-ui.json」を貼り付け。
   1. 「読み込み先」に「新規タブ」を選択。
   1. 「読み込み」をクリック。
   1. 「Watson Discovery AI検索」タブが表示される。
