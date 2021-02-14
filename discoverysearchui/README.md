@@ -17,6 +17,8 @@ IBM Watson Discoveryを使うことで、アップロードした文書やWebク
   1. 「Watson Discovery AI検索」タブが表示される。
   1. 読み込み後のNode-RED上のフロー
   ![読み込みフローイメージ](https://github.com/kolinz/node-red-recipe/blob/master/discoverysearchui/images/flowimage.png)
+- 動かした方
+Qiitaにまとめましたのでご参照ください。>> [Watson DiscoveryでAI検索できるので、画面を作った話(Node-REDの場合)](https://qiita.com/kolinz/items/2b65b60ad3f2ca52ce5d)
   
 
 # 参考資料
