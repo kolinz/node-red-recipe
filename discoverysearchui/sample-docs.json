@@ -1,0 +1,39 @@
+[
+    {
+        "title": "Code and Response Day Online #1",
+        "url": "https://bmxug.connpass.com/event/171668/",
+        "text": "Call for Codeの説明会と、マスクの店舗別在庫情報を地図に表示するWebアプリの作り方を解説します。",
+        "date": "2020-04-10"
+    },
+    {
+        "title": "Code and Response Day Online #2",
+        "url": "https://bmxug.connpass.com/event/174576/",
+        "text": "Call for Codeの説明会と、IBM Watson IoT 仮想センサーの計測値をデータベースに記録する仕組みについてのハンズオンを実施。",
+        "date": "2020-05-22"
+    },
+    {
+        "title": "水曜ワトソンカフェvol.26「TensorflowとWatson MLによる画像分類アプリ」",
+        "url": "https://bmxug.connpass.com/event/179594/",
+        "text": "TensorflowとWatson MLによる画像分類アプリ作りについて解説します。",
+        "date": "2020-07-08"
+    },
+    {
+        "title": "IBM CloudとARでセンサデータを可視化してみよう",
+        "url": "https://bmxug.connpass.com/event/185059/",
+        "text": "検証用の仮想センサーの計測値を可視化するARコンテンツを作成します。ARの表示には、スマートフォンを使用します。",
+        "date": "2020-08-28"
+    },
+    {
+        "title": "BMXUG Online 初めてのIBM Maximo Visual Inspection",
+        "url": "https://bmxug.connpass.com/event/199419/",
+        "text": "2021年12月1日にIBM Watson Visual Recognition (VR)のサービス終了にあたり、移行先となり得る「IBM Maximo Visual Inspection」についての説明会を開催します。今までパートナー向け説明会はありましたが、今回のような説明会の機会は少ないかと思います。ご参加お待ちしております。",
+        "date": "2021-01-26"
+    },
+    {
+        "title": "IBM Champions Garage #1 Clubhouseで「クラウド学習」をネタにトーク",
+        "url": "https://bmxug.connpass.com/event/204175/",
+        "text": "クラウドを中心に、IBM Cloud含め、無料のクラウド使って、クラウドやAIの勉強を行う方法や経験をトークしあったり、IBM Cloud Blogの記事についてご紹介したり、実験的イベントとしてゆるめに実施します。",
+        "date": "2021-02-12"
+    }
+
+]
