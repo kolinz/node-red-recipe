@@ -1,0 +1,151 @@
+[
+    {
+        "id": "5102e909.65d718",
+        "type": "tab",
+        "label": "image recognition",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "bdc94f66.6569d",
+        "type": "camerapi-takephoto",
+        "z": "5102e909.65d718",
+        "filemode": "0",
+        "filename": "",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "1",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 380,
+        "y": 80,
+        "wires": [
+            [
+                "5b3aac49.aa7684",
+                "b73ab8a6.d80108"
+            ]
+        ]
+    },
+    {
+        "id": "5b3aac49.aa7684",
+        "type": "teachable machine",
+        "z": "5102e909.65d718",
+        "name": "",
+        "mode": "online",
+        "modelUrl": "https://teachablemachine.withgoogle.com/models/zTx7v43x4/",
+        "localModel": "teachable_model",
+        "output": "best",
+        "activeThreshold": false,
+        "threshold": 80,
+        "activeMaxResults": false,
+        "maxResults": 3,
+        "passThrough": false,
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "1b49fb8b.05e814",
+                "a0a2938a.204c6"
+            ]
+        ]
+    },
+    {
+        "id": "9426541b.473b18",
+        "type": "inject",
+        "z": "5102e909.65d718",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "bdc94f66.6569d"
+            ]
+        ]
+    },
+    {
+        "id": "d710d411.1b0888",
+        "type": "debug",
+        "z": "5102e909.65d718",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 690,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1b49fb8b.05e814",
+        "type": "debug",
+        "z": "5102e909.65d718",
+        "name": "[デバッグ] 画像認識結果",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload[0]",
+        "targetType": "msg",
+        "x": 410,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a0a2938a.204c6",
+        "type": "function",
+        "z": "5102e909.65d718",
+        "name": "認識結果から読み上げ文を生成",
+        "func": "msg.class = msg.payload[0].class;\nmsg.score = msg.payload[0].score;\nmsg.payload = \"これは\"+ msg.class + \"です。\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "d710d411.1b0888",
+                "10f6f40d.e7570c"
+            ]
+        ]
+    },
+    {
+        "id": "b73ab8a6.d80108",
+        "type": "image",
+        "z": "5102e909.65d718",
+        "name": "",
+        "width": 160,
+        "x": 620,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "10f6f40d.e7570c",
+        "type": "openjtalk",
+        "z": "5102e909.65d718",
+        "name": "",
+        "x": 680,
+        "y": 320,
+        "wires": []
+    }
+]
